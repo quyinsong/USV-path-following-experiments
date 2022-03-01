@@ -1,5 +1,5 @@
 % line of sight guidence used in straight line path following
-
+% ç›¸æ¯”äºtestLOS1ï¼Œè¯¥ä»¿çœŸå¢åŠ äº†çºµå‘é€Ÿåº¦æ§åˆ¶å™¨çš„è®¾è®¡
 % control law use PID
 clc;
 clear ;
@@ -18,27 +18,42 @@ Xuu=-1.32742;        Yr=-7.25;             Nr=-1.900;
 
 
 %% initial
-% generate point sets
-point_database =[0 0; 40 40; 80 40; 90 20; 90 10; 80 0; -20 -30; -20 60; 80 60; 80 90; -40 90; ...
-                 -40 -45; 0 -45; 0 0]';
-pointer = 1;
+% generate point sets------------------------------------
+% point_database =[0 0; 40 40; 80 40; 90 20; 90 10; 80 0; -20 -30; -20 60; 80 60; 80 90; -40 90; ...
+%                  -40 -45; 0 -45; 0 0]';
+
+% point_database =[0 0; 40 40; 80 40; 90 20; 90 10; 80 0; -20 -30; 40 -30]';
+
+kk = 0:2*pi/15:2*pi;
+xx = 20*cos(kk);
+yy = 20*sin(kk);
+point_database = [xx;yy];
+
+% kk = 0:2*pi/100:2*pi;
+% xx = 20*kk;
+% yy = 10*sin(2*kk);
+% point_database = [xx;yy];
+
+%--------------------------------------------------------- 
+
+pointer = 1; % èˆªè¿¹ç‚¹æŒ‡é’ˆï¼Œåˆå§‹å€¼ä¸º1ï¼ŒæŒ‡å‘ç¬¬ä¸€ä¸ªèˆªè¿¹ç‚¹
 Pk = point_database(:,pointer);
 Pk1 = point_database(:,pointer+1);
 afak=atan2(Pk1(2)-Pk(2),Pk1(1)-Pk(1));
 
-ts =0.01; % ²ÉÑùÊ±¼ä
-tfinal=135; % ·ÂÕæ½áÊøÊ±¼ä
-Ns=tfinal/ts; % ·ÂÕæ²½Êı
-x=[0 0 0 -5 2 pi/2]'; % USV³õÊ¼×´Ì¬
-ek_1=2; % ô¼Ïò½Ç¸ú×ÙÇ°Ò»Ê±¿ÌÎó²î³õÊ¼»¯
+ts =0.01; % é‡‡æ ·æ—¶é—´
+tfinal=50; % ä»¿çœŸç»“æŸæ—¶é—´
+Ns=tfinal/ts; % ä»¿çœŸæ­¥æ•°
+x=[0 0 0 18 0 pi/2]'; % USVåˆå§‹çŠ¶æ€
+ek_1=2; % è‰å‘è§’è·Ÿè¸ªå‰ä¸€æ—¶åˆ»è¯¯å·®åˆå§‹åŒ–
 
-psaid_1 = 0.1; psaid_2 = 0.05; % ÆÚÍûô¼Ïò½ÇÇ°Á½Ê±¿Ì³õÊ¼»¯
+psaid_1 = 0.1; psaid_2 = 0.05; % æœŸæœ›è‰å‘è§’å‰ä¸¤æ—¶åˆ»åˆå§‹åŒ–
 
-% ÉêÇëÄÚ´æ´æ´¢Ê±¼äĞòÁĞ
-xout=zeros(Ns,6);% USV×´Ì¬
-YE=zeros(Ns,1); % ºáÏòÎó²î
-Ek=zeros(Ns,1); % ô¼Ïò½ÇÎó²î  
-Ttao=zeros(Ns,3); % ¿ØÖÆÁ¦ºÍÁ¦¾Ø
+% ç”³è¯·å†…å­˜å­˜å‚¨æ—¶é—´åºåˆ—
+xout=zeros(Ns,6); % USVçŠ¶æ€
+YE=zeros(Ns,1); % æ¨ªå‘è¯¯å·®
+Ek=zeros(Ns,1); % è‰å‘è§’è¯¯å·®  
+Ttao=zeros(Ns,3); % æ§åˆ¶åŠ›å’ŒåŠ›çŸ©
 
 %% simulation
 disp('Simulation ...');
@@ -49,14 +64,31 @@ for k=1:1:Ns
     deta=3;
     Rk = sqrt((x(4)-Pk1(1))^2+(x(5)-Pk1(2))^2);
     if pointer ~= length(point_database(1,:))-1
-        if Rk<=5  % LOSº½¼£µãÇĞ»»°ë¾¶Îª5m
+        if Rk<=5  % LOSèˆªè¿¹ç‚¹åˆ‡æ¢åŠå¾„ä¸º5m
             pointer = pointer+1;
             Pk = point_database(:,pointer);
             Pk1 = point_database(:,pointer+1);
         end
     end
-    
     afak=atan2(Pk1(2)-Pk(2),Pk1(1)-Pk(1));
+    % é˜²æ­¢LOè·¯å¾„åˆ‡æ¢æ—¶äº§ç”Ÿè¾ƒå¤§çš„çªå˜------------
+    if pointer == 1
+       Pk0 = point_database(:,pointer);
+       Pk01 = point_database(:,pointer+1);
+    else
+       Pk0 = point_database(:,pointer-1);
+       Pk01 = point_database(:,pointer);
+    end
+    afak0 = atan2(Pk01(2)-Pk0(2),Pk01(1)-Pk0(1));
+    if abs(afak-afak0)*180/pi >= 180
+        if afak > 0
+            afak = afak - 2*pi;
+        elseif afak < 0
+            afak = afak + 2*pi;
+        end
+    end
+    %--------------------------------------------------
+
     ye=-(x(4)-Pk(1))*sin(afak)+(x(5)-Pk(2))*cos(afak);
     beta=atan2(x(2),x(1));
     psaid=afak+atan2(-ye/deta,1)-beta;
@@ -72,8 +104,8 @@ for k=1:1:Ns
     m32 = m*xg-Nvdot;
     m33 = Iz-Nrdot;
     % -----------------------------------------------------
-    c13 = -m*(xg*r+v); 
-    c23 = m*u;
+    c13 = -m23*r-m22*v;  % åšäº†ä¿®æ”¹ï¼ŒåŸæ¥çš„å½¢å¼ä¸ºï¼šc13=-m*(xg*r+v), c23 = m*u;
+    c23 = m11*u;
     c31 = -c13; c32 = -c23;
     % -----------------------------------------------------
     d11=-Xu-Xuu*abs(u);
@@ -87,26 +119,26 @@ for k=1:1:Ns
     
     psaidd = (psaid-2*psaid_1+psaid_2)/ts^2;
     psaid_2=psaid_1; psaid_1 = psaid;
-    tpid=(-Kpr*ek-Kdr*(ek-ek_1)/ts-fr*m0/m22+psaidd); % ô¼Ïò¿ØÖÆÁ¦¾Ø  
+    tpid=(-Kpr*ek-Kdr*(ek-ek_1)/ts-fr*m0/m22+psaidd); % è‰å‘æ§åˆ¶åŠ›çŸ©  
     tr = tpid;
     ek_1=ek;
     % surge control law
     fu = (-c13*r-d11*u)/m11;
-    ud = 6;
+    ud = 3;
     eu = u-ud;
     Kpu = 4;
-    tu = m11*(-fu-Kpu*eu); % ×İÏòËÙ¶È¿ØÖÆÆ÷
+    tu = m11*(-fu-Kpu*eu); % çºµå‘é€Ÿåº¦æ§åˆ¶å™¨
     tao=[tu 0 tr]';
     % USV
-    d = [0 0 0]'; % Íâ½ç¸ÉÈÅ
+    d = [0 0 0]'; % å¤–ç•Œå¹²æ‰°
     xdot=USV01(x,tao,[0,0]',d);
     % state update
     x=euler2(xdot,x,ts);
     % store time series
-    xout(k,:)=x';% USV×´Ì¬
-    YE(k)=ye; % ºáÏòÎó²î
-    Ek(k)=ek; % ô¼Ïò½ÇÎó²î  
-    Ttao(k,:)=tao'; % ¿ØÖÆÁ¦ºÍÁ¦¾Ø
+    xout(k,:)=x';% USVçŠ¶æ€
+    YE(k)=ye; % æ¨ªå‘è¯¯å·®
+    Ek(k)=ek; % è‰å‘è§’è¯¯å·®  
+    Ttao(k,:)=tao'; % æ§åˆ¶åŠ›å’ŒåŠ›çŸ©
 end
 
 %% plot
