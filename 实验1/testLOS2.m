@@ -20,19 +20,22 @@ Xuu=-1.32742;        Yr=-7.25;             Nr=-1.900;
 %% initial
 % generate point sets------------------------------------
 % point_database =[0 0; 40 40; 80 40; 90 20; 90 10; 80 0; -20 -30; -20 60; 80 60; 80 90; -40 90; ...
-%                  -40 -45; 0 -45; 0 0]';
+%                  -40 -45; 0 -45; 0 0]'; % 任意不规则路径
 
 % point_database =[0 0; 40 40; 80 40; 90 20; 90 10; 80 0; -20 -30; 40 -30]';
+% point_database =[5 0; 5 20; 25 20; 25 40; 5 40; 5 50; ]';  % 梳状路径
 
-kk = 0:2*pi/15:2*pi;
-xx = 20*cos(kk);
-yy = 20*sin(kk);
-point_database = [xx;yy];
+point_database =[5 0; 60 60; 5 15]'; % 定点返航
 
-% kk = 0:2*pi/100:2*pi;
-% xx = 20*kk;
-% yy = 10*sin(2*kk);
-% point_database = [xx;yy];
+% kk = 0:2*pi/4:2*pi;
+% xx = 20*cos(kk)+40;
+% yy = 20*sin(kk)+40;
+% point_database = [xx;yy]; % 圆形路径
+
+% kk = 0:2*pi/20:2*pi;
+% xx = 5*kk;
+% yy = 10*sin(2*kk)+20;
+% point_database = [xx;yy];  % 正弦路径
 
 %--------------------------------------------------------- 
 
@@ -42,11 +45,10 @@ Pk1 = point_database(:,pointer+1);
 afak=atan2(Pk1(2)-Pk(2),Pk1(1)-Pk(1));
 
 ts =0.01; % 采样时间
-tfinal=50; % 仿真结束时间
+tfinal=60; % 仿真结束时间
 Ns=tfinal/ts; % 仿真步数
-x=[0 0 0 18 0 pi/2]'; % USV初始状态
+x=[0 0 0 0 0 pi/2]'; % USV初始状态
 ek_1=2; % 艏向角跟踪前一时刻误差初始化
-
 psaid_1 = 0.1; psaid_2 = 0.05; % 期望艏向角前两时刻初始化
 
 % 申请内存存储时间序列
@@ -61,32 +63,32 @@ for k=1:1:Ns
     time(k)=k*ts;
     
     % LOS law
-    deta=3;
+    deta=4;
     Rk = sqrt((x(4)-Pk1(1))^2+(x(5)-Pk1(2))^2);
     if pointer ~= length(point_database(1,:))-1
-        if Rk<=5  % LOS航迹点切换半径为5m
+        if Rk<= 3 % LOS航迹点切换半径为5m
             pointer = pointer+1;
             Pk = point_database(:,pointer);
             Pk1 = point_database(:,pointer+1);
         end
     end
     afak=atan2(Pk1(2)-Pk(2),Pk1(1)-Pk(1));
-    % 防止LO路径切换时产生较大的突变------------
-    if pointer == 1
-       Pk0 = point_database(:,pointer);
-       Pk01 = point_database(:,pointer+1);
-    else
-       Pk0 = point_database(:,pointer-1);
-       Pk01 = point_database(:,pointer);
-    end
-    afak0 = atan2(Pk01(2)-Pk0(2),Pk01(1)-Pk0(1));
-    if abs(afak-afak0)*180/pi >= 180
-        if afak > 0
-            afak = afak - 2*pi;
-        elseif afak < 0
-            afak = afak + 2*pi;
-        end
-    end
+    % 防止LOS路径切换时产生较大的突变------------
+%     if pointer == 1
+%        Pk0 = point_database(:,pointer);
+%        Pk01 = point_database(:,pointer+1);
+%     else
+%        Pk0 = point_database(:,pointer-1);
+%        Pk01 = point_database(:,pointer);
+%     end
+%     afak0 = atan2(Pk01(2)-Pk0(2),Pk01(1)-Pk0(1));
+%     if abs(afak-afak0)*180/pi >= 180
+%         if afak > 0
+%             afak = afak - 2*pi;
+%         elseif afak < 0
+%             afak = afak + 2*pi;
+%         end
+%     end
     %--------------------------------------------------
 
     ye=-(x(4)-Pk(1))*sin(afak)+(x(5)-Pk(2))*cos(afak);
@@ -95,8 +97,8 @@ for k=1:1:Ns
     % yaw control law
     u = x(1);v=x(2);r= x(3);
     ek=x(6)-psaid;
-    Kdr = 6; 
-    Kpr =4;
+    Kdr = 2; 
+    Kpr = 5;
     % ----------------------------------------------------
     m11 = m-Xudot; 
     m22 = m-Yvdot;
@@ -119,14 +121,14 @@ for k=1:1:Ns
     
     psaidd = (psaid-2*psaid_1+psaid_2)/ts^2;
     psaid_2=psaid_1; psaid_1 = psaid;
-    tpid=(-Kpr*ek-Kdr*(ek-ek_1)/ts-fr*m0/m22+psaidd); % 艏向控制力矩  
+    tpid=(-Kpr*ek-Kdr*(ek-ek_1)/ts-fr+psaidd)*m0/m22; % 艏向控制力矩  
     tr = tpid;
     ek_1=ek;
     % surge control law
     fu = (-c13*r-d11*u)/m11;
-    ud = 3;
+    ud = 4;
     eu = u-ud;
-    Kpu = 4;
+    Kpu = 5;
     tu = m11*(-fu-Kpu*eu); % 纵向速度控制器
     tao=[tu 0 tr]';
     % USV
