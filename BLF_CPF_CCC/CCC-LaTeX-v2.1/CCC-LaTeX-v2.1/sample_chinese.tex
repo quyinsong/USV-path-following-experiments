@@ -1,0 +1,287 @@
+% $ based on Id: sample_chinese-v1.2.tex,v 1.2 2007/04/12 21:05:22 zlb Exp $
+% $Id: sample_chinese.tex 6 2011-01-24 13:13:33Z hsqi $
+
+\documentclass[chinese]{cccconf}
+%\documentclass[usemulticol,chinese]{cccconf}
+\usepackage[comma,numbers,square,sort&compress]{natbib}
+\usepackage{epstopdf}
+\usepackage{ccmap}
+\begin{document}
+
+%------------------- 中文标题、作者、摘要和关键字
+
+\title{中国控制会议论文电子文档格式要求}
+
+\author{张三\aref{amss}, 李四\aref{amss,hit}, 王五\aref{hit}}
+
+%注：若几个作者是同一单位，就可省去下面\affiliation命令中的参数选项。
+%同时，上一行的“张三，李四，王五”后面不能标注\aref命令。
+
+\affiliation[amss]{中国科学院数学与系统科学研究院, 北京~100190
+        \email{ccc@amss.ac.cn}}
+\affiliation[hit]{哈尔滨工业大学系统仿真研究中心, 哈尔滨~150001
+        \email{xxx@hit.edu.cn}}
+
+
+\maketitle
+
+\begin{abstract}
+  中国控制会议论文集用光盘版和纸质版两种形式.
+为了提高论文集质量, 我们为论文排版制定了统一规范.
+请按照此规范提供论文的最终版本. 注意:
+中文文章必须同时提供英文摘要和关键词.
+\end{abstract}
+
+\keywords{论文, 格式, 电子文档}
+
+%------------------- 英文标题、作者、摘要和关键字
+
+\title{Template for Preparation of Papers for Chinese Control Conference}
+\author{San Zhang\aref{amss},
+        Si Li\aref{amss,hit},
+        Wu Wang\aref{hit}}
+
+\affiliation[amss]{Academy of Mathematics and Systems Science,
+        Chinese Academy of Sciences, Beijing~100190, P.~R.~China
+        \email{ccc@amss.ac.cn}}
+\affiliation[hit]{Harbin Institute of Technology, Harbin~150001, P.~R.~China
+        \email{xxx@hit.edu.cn}}
+
+\maketitle
+
+\begin{abstract}
+This is the paper style requirement for the Chinese Control
+Conference. The writers of papers should and must provide normalized
+electronic documents in order for readers to search and read papers
+conveniently.
+\end{abstract}
+
+\keywords{Paper, Instruction, Chinese Control Conference}
+
+%------------------------------------------------
+
+% 如果第一页不需要脚注，请删除或注释下面一行
+\footnotetext{此项工作得到国家自然科学基金资助, 项目批准号: 00000000.}
+
+\section{文件类型要求}
+
+ 中国控制会议论文集将采用光盘版和纸质版两种形式. 为规范论文的版面, 特制作此
+ 模板---中文 ~\LaTeX{} 模板, 同时我们也制作了英文 ~\LaTeX{} 模板和中、英文 ~MS Word 模板.
+下载电子模板请登陆中国控制会议论文管理系统
+~http://cms.amss.ac.cn/support.
+
+\subsection{提交论文作者须知}
+
+根据出版社编辑加工的需要, 每篇论文需提交 ~Word 文件和 ~PDF 文件各一份,
+或者 ~Latex 格式文件和 ~PDF 文件各一份 ~(Latex 格式及 ~MS
+Word 英文版请见另外模板). 如果论文中有图, 请同时提交图形文件,
+将论文及图形文件打包成一个压缩文件 ~(.zip 或 ~.rar文件) 上传.
+
+\section{版面要求}
+
+论文排版在 ~A4 纸张上, 版芯为 ~176mm$\times$255mm. 版面居中.
+这里给出论文版面的详细规范及其说明.
+
+\subsection{页面和字体设置}
+
+本文是一个 ~\LaTeX{} 中文模板,
+您可以直接使用此模板, 也可以按照要求建立自己的模板.
+下面两个列表分别给出页面设置和字体设置,
+请以此作为自己设置模板的规范。
+
+\subsection{题目及摘要}
+
+题目为单栏, 栏宽 ~17.6cm, 小二号黑体, 段前空 ~18 磅, 段后空 ~12 磅.
+
+作者小四号仿宋体占一行. 当作者为不同单位时, 用罗马数字作为上标标注.
+
+作者单位、所在城市、邮编为小五号宋体占一行, 段前空 ~6 磅.
+
+Email 地址小五号, Roman 体.
+当有多个单位时, 按照作者的标注顺序, 列出单位等信息, 字体格式如前所述.
+
+
+中文摘要, 关键词为单栏小页面, 栏宽 ~16.2cm, 居中. 摘要、关键词小五号宋体, ``摘
+要"、``关键词"两词顶头, 小五号黑体. 摘要段后空 ~2 磅.
+
+\begin{table}
+  \centering
+  \caption{页面设置}
+  \label{tab1}
+  \begin{tabular}{l|l}
+    \hhline
+    纸  张      & A4 (21cm$\times$29.7cm) \\ \hline
+    上边距 ~(首页)   & 3.0cm \\ \hline
+    上边距 ~(其他)   & 2.0cm \\ \hline
+    下边距       & 2.2cm \\ \hline
+    左边距         & 1.7cm \\ \hline
+    右边距        & 1.7cm \\ \hline
+    栏  宽        & 8.45cm \\ \hline
+    栏间距       & 0.7cm \\ \hline
+    版面宽         & 17.6cm \\ \hline
+    版面高         & 25.5cm \\
+    \hhline
+  \end{tabular}
+\end{table}
+
+
+\begin{table}
+  \centering
+  \caption{字体设置}
+  \label{tab2}
+  \begin{tabular}{p{3.5cm}|p{3.5cm}}
+    \hhline
+   标题   & 小二号, 黑体, 距上边距 ~3.0cm \\ \hline
+   作者    & 小四号, 仿宋体 \\ \hline
+   作者地址   & 小五号,  宋体 \\ \hline
+   Email &  小五号, Roman 字体 \\\hline
+   摘要、关键词   & 小五号,  宋体; ``摘^^a1^^a1要"、``关键词" 两词小五号, 黑体 \\ \hline
+   题目（英文）   & 四号,  Roman 字体, 加粗  \\ \hline
+   作者（英文） & 五号,  Roman 字体\\ \hline
+   作者地址 ~(英文), Email & 小五号,  Roman字体 \\ \hline
+   摘要、关键词 ~(英文) & 小五号,  Roman字体, ``Abstract", ``Key Words"加粗\\ \hline
+   一级标题 & 小四号, 黑体 \\ \hline
+   二级及二级以下标题 & 五号, 黑体 \\ \hline
+   一级标题（英文） & 小四号, Roman 字体, 加粗\\ \hline
+   二级及二级以下标题（英文） & 五号, Roman 字体, 加粗\\ \hline
+   正文字体& 五号,  宋体\\ \hline
+   图、表标题 & 小五号,  宋体 \\ \hline
+   表内文字& 小五号, 宋体 \\ \hline
+   脚注 & 8 磅,  宋体或 ~Roman 体\\ \hline
+   参考文献 & 小五号, 宋体, 或小五号, Roman 字体, ``参考文献"同一级标题\\
+    \hhline
+  \end{tabular}
+\end{table}
+
+中文论文同时需要提供英文摘要等信息. 英文题目为单栏, 栏宽 ~17.6cm, 四号,
+Roman 字体, 加粗. 段前空 ~18 磅, 段后空 ~12 磅.
+每个单词的第一个字母大写, 其它字符均为小写. 作者英文姓名为五号, Times
+New Roman 字体, 占一行.
+
+作者英文单位、地址、城市、邮编, 小五号,
+Roman 字体, 占一行, 段前空 ~6 磅. 单位中每个单词的第一个字符大写, 后面字符小写.
+
+Email 地址小五号, Roman 体.
+
+英文摘要、关键词为单栏小页面, 栏宽 ~16.2cm, 居中. 字体为小五号 ~Roman 体,
+``Abstract", ``Key Words" 加粗.
+
+以上均为单倍行距.
+
+\subsection{标题}
+
+标题居左、顶头. 节号用阿拉伯数字 ~1, 2, …
+连续地排, 下一级标题的节号要包含上一级标题的节号, 用``."分隔, 格式如上行.
+
+一级标题中文为小四号黑体, 英文为小四号 ~Times New Roman 体加粗.
+英文标题大写. 段前、后各空 ~6 磅.
+
+二级及二级以下标题中文为 ~5 号黑体, 英文为五号 ~Times New Roman 体加粗.
+英文标题首字母大写, 其它小写. 段前、后各空 ~6 磅.
+
+以上均为单倍行距.
+
+
+
+\subsection{正文}
+
+ 正文为两栏, 栏间距 ~0.7cm, 栏宽 ~8.45cm. 版面为 ~A4 纸, 版芯为 ~17.6cm$\times$25.5cm.
+正文采用五号宋体, 正文中的英文为五号 ~Times New Roman 体.
+段头空两个中文字, 单倍行距.
+
+
+\subsection{表格}
+
+表的标题位于表上方, 居中, 小五号宋体, 段前、后各空 ~6 磅.
+表的序号用阿拉伯数字. 表中文字为中文小五号宋体或者英文小五号 ~Times
+New Roman 体. 表格上、下边框为双线, 左、右无边框, 表内用单线分隔.
+如果一栏内放不下表格, 可以跨栏, 表格最好放置在文中提到的段落后面.
+
+\subsection{图}
+
+图的标题位于图的下方, 居中, 小五号宋体, 段前、后各空 ~6 磅. 图的序号用阿拉伯数字. 图形尽可能
+放置在文中提到的段落后面. 为了使图形更加清晰, 请用原始图或者照片, 并将图形文件随
+同论文一起上传.
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\hsize]{fig1.eps}
+  \caption{The Caption}
+  \label{fig1}
+\end{figure}
+
+\subsection{数学公式}
+
+数学公式居中, 根据需要可以添加公式编号. 如果公式一栏放不下, 可以跨栏.
+\begin{equation}
+  \label{eq1}
+  \lambda_{1,2} = 0.5 \left[\, c_{11} + c_{12}
+            \sqrt{(c_{11} + c_{12})^2 + 4 c_{12} c_{21}} \,\right]
+\end{equation}
+
+\subsection{ 参考文献}
+
+参考文献按照文中出现的顺序排列. 排列序号为方括号中插入阿拉伯数字,
+例如``\cite{hong2005,sun2005,cheng2005,cheng2005b,zhao2005}".
+
+``参考文献"四个字为小四号黑体, 居左顶头, 占一行. 段前空 ~6 磅,
+段后空 ~6 磅.
+
+中文参考文献为小五号宋体, 英文参考文献为小五号 ~Times New Roman 体.
+段头不空, 悬挂式缩进 ~0.7cm, 单倍行距, 段后空 ~2 磅.
+
+参考文献为期刊论文时,
+每篇论文包括作者、题名、刊名、卷、期、页、出版年信息;
+参考文献为专著时，每本专著包括著者、书名、版本、出版地、出版者、出版年信息.
+具体形式可参见本文中参考文献样例.
+
+%
+% 注: \balance 命令必须放在最后一页左栏的某个位置，以使得最后一页的两栏高度一致
+%
+\balance
+
+\section{注意事项}
+
+\begin{itemize}
+  \item 各节标题不要落在页面的底部;
+  \item 文中要保持行距一致;
+  \item 图、表最好放置在文中提到的段落附近;
+  \item 文中不需要插入页码;
+  \item 为使最后一页两栏对齐，将命令 ~\verb|\balance| 放在当两栏不对齐
+    时位于最后一页左栏的文本中的任何一个位置 ~(太早或太晚都不起作用)，
+    参考 ~\texttt{balance} 宏包的说明;
+  \item 如果希望在正文中插入跨栏内容，则需要在 ~\verb|\documentclass| 命令中
+    加入 ~\verb|usemulticol| 选项，然后用命令 ~\verb|\singlecolumn{内容}|
+    插入跨栏内容，参看后面说明形式的示例。该选项利用 ~\verb|multicol| 宏包
+    实现单双栏切换，缺点是有脚注的页面的底部对不齐。
+\end{itemize}
+
+%\singlecolumn{\hrule\smallskip 这是一段跨栏文字\smallskip\hrule}
+
+
+请按照此规范认真准备您的论文, 并在投稿要求的日期内上传您的文件 ~(Latex 文件,
+PDF 文件, 如果有的话还包括图形文件) 至 ~http://cms.amss.ac.cn.
+
+\begin{thebibliography}{0}
+
+\bibitem{cheng2005}
+D.~Cheng, Controllability of switched bilinear systems, \emph{IEEE Trans. on
+  Automatic Control}, 50(4): 511--515, 2005.
+
+\bibitem{cheng2005b}
+D.~Cheng, R.~Ortega, and E.~Panteley, On port controlled hamiltonian systems,
+  in \emph{Advanced Robust and Adaptive Control --- Theory and Applications},
+  D.~Cheng, Y.~Sun, T.~Shen, and H.~Ohmori, Eds. Beijing: Tsinghua University Press, 2005: 3--16.
+
+\bibitem{hong2005}
+洪奕光，程代展. \emph{非线性系统的分析与控制}. 北京: 科学出版社, 2005.
+
+\bibitem{sun2005}
+孙轶民，郭雷. 关于平面仿射非线性系统的全局渐近能控性, \emph{中国科学（E辑）},
+  35(8): 830--839, 2005.
+
+\bibitem{zhao2005}
+赵延龙，张纪峰. 基于多值传感器的线性离散系统的鲁棒辨识, \emph{第二十四届中国控制会议论文集}, 2005: 274--278.
+\end{thebibliography}
+
+\end{document}
