@@ -1,0 +1,23 @@
+程序说明：
+一、基于GNSS测量的估计方法研究：
+1 Simulink文件说明：
+（1）LOSdemo0： 该程序文件为不加任何滤波估计的路径跟踪demo，其反馈状态都为真实值，以便形成对照
+（2）LOSdemoEKF：EKF实验，使用EKF估计船舶状态，作为控制器输入，进行路径跟踪控制
+（3）LOSdemoUKF：UKF实验，使用UKF估计船舶状态，作为控制器输入，进行路径跟踪控制
+（4）LOSdemoCKF3：三阶CKF实验，使用三阶CKF估计船舶状态，作为控制器输入，进行路径跟踪控制
+（5）LOSdemoCKF5：五阶CKF实验，使用五阶CKF估计船舶状态，作为控制器输入，进行路径跟踪控制
+2 M文件说明
+EKF、UKF、CKF3、CKF5分别为（2）（3）（4）（5）中simulink调用的文件，构成不同滤波器
+mariner1：为无人船模型
+modelplot：为绘制船体几何模型
+plotdemo5：为绘制船舶运动状态的m文件
+fhan和TD1：构成微分跟踪器，方便求取状态导数
+calSS_：计算五阶CKF的S+和S-矩阵
+MCdemo2：进行蒙特卡洛实验
+二、基于Compass测量的估计方法研究：
+1 Simulink文件说明：
+（1）LOSdemoKF：KF实验，使用KF估计船舶状态，作为控制器输入，进行路径跟踪控制
+2. M文件说明
+KF为（1）中simulink中调用的文件
+mariner：无人船模型
+MCdemo1：进行蒙特卡洛实验
